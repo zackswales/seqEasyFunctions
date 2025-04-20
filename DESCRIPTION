@@ -10,6 +10,7 @@ Description: This package contains the functions used for importing bigWig files
     hmList - generates heatmaps using the EnrichedHeatmap function from a list of matrices and a vector specifying windows. There are a range of customisation options available that the user can apply to their heatmaps
     mplot - creates average profile plots using the ggplot function from a list of matrices. There are a wide variety of arguments which can be customised to improve the output.
     getFeature - adapted from the rootGenomics library with a few alterations. The function allows specification of specific region blocks from a GRanges object such as flank regions and exon information
+    plotggplotHeatmap - generates heatmaps as ggplot objects using a list of matrices with a list of customisation options such as colour palettes, scaling, average profile plots etc.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
