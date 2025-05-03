@@ -1,0 +1,83 @@
+---
+title: "Detailed Example of matList Usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Detailed Example of matList Usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Detailed Example of `matList`
+
+This vignette provides a detailed example of how to use the `matList` function to generate matrices from a list of imported bigWig files and region files with a range of customisation options to alter the output. The function leverages the `rtracklayer`, `GenomicRanges`, `purrr`, `MatrixGenerics`, and `EnrichedHeatmap` packages to manipulate genomic data and then process this into a matrix.
+
+## Prerequisites
+
+Before we begin, ensure that you have the necessary packages installed and loaded:
+
+```{r install_packages, eval=FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(version = "3.21")
+
+if (!requireNamespace("rtracklayer", quietly = TRUE)) {
+  BiocManager::install("rtracklayer")
+}
+if (!requireNamespace("purrr", quietly = TRUE)) {
+  install.packages("purrr")
+}
+if (!requireNamespace("GenomicRanges", quietly = TRUE)) {
+  BiocManager::install("GenomicRanges")
+}
+if (!requireNamespace("MatrixGenerics", quietly = TRUE)) {
+  BiocManager::install("MatrixGenerics")
+}
+if (!requireNamespace("EnrichedHeatmap", quietly = TRUE)) {
+  BiocManager::install("EnrichedHeatmap")
+}
+
+# Once installed then load the required libraries
+
+library(rtracklayer)
+library(purrr)
+library(GenomicRanges)
+library(MatrixGenerics)
+library(EnrichedHeatmap)
+```
+
+## Usage
+
+In this example we are going to use 3 unstranded bigWig files. We are also going to extend the regions by 20b either side and set the window size to 1.
+
+1. Import bigWig files using the `importBWlist` function
+
+```r
+# Define our file paths and names for the importBWlist() function
+bw_file_paths <- c("path/to/sample1.bw", "path/to/sample2.bw", "path/to/treatment.bw")
+sample_names <- c("Sample1", "Sample2", "Treatment")
+
+# Import our bigWig files using the importBWlist function()
+imported_bw <- importBWlist(bwf = bw_file_paths, names = sample_names)
+```
+
+2. Import our region file
+
+```r 
+# Import the .bed file as a GRanges object
+regions <- readBed(path/to/regions.bed)
+```
+
+3. Specify the arguments we desire and create matrices using the `matList` function
+
+```r
+# Generate matrices using the matList() function
+matl <- matList(
+  bwf = imported_bw, 
+  names = names(imported_bw), 
+  grl = list("regions" = regions), 
+  extend = 20, 
+  w = 1, 
+  strand = "no"
+  )
+```
+

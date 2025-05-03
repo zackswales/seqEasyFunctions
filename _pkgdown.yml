@@ -1,0 +1,31 @@
+template:
+  bootstrap: 5
+  bootswatch: yeti
+
+navbar:
+  title: "seqEasyFunctions"
+  left:
+    - text: "Reference"
+      href: reference/index.html
+    - text: "Articles"
+      href: articles/index.html
+  right:
+    - text: GitHub
+      href: https://github.com/zackswales/seqEasyFunctions
+  template:
+    logo: man/figures/logo.png
+
+reference:
+  - title: "Function Reference"
+    contents:
+      - importBWlist
+      - getFeature
+      - matList
+      - hmList
+      - plotggplotHeatmap
+      - mplot
+
+home:
+  title: "Welcome to seqEasyFunctions"
+  sidebar:
+    structure: [links, license, authors, dev]

@@ -1,0 +1,71 @@
+---
+title: "Detailed Example of getFeature Usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Detailed Example of getFeature Usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Detailed Example of `getFeature`
+
+This vignette provides a detailed example of how to use the `getFeature` function to specify particular genomic features from within a region file, adapted from the rootGenomics original getFeature function. The function leverages the `GenomicRanges` package for the manipulation of this genomic data.
+
+## Prerequisites
+
+Before we begin, ensure that you have the necessary packages installed and loaded:
+
+```{r install_packages, eval=FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(version = "3.21")
+
+if (!requireNamespace("GenomicRanges", quietly = TRUE)) {
+  BiocManager::install("GenomicRanges")
+}
+
+# Once installed then load the required libraries
+
+library(GenomicRanges)
+```
+
+## Usage
+
+In this example we are wanting to:
+  1. Specify the region around the TSS with a 50b flank either side
+  2. Specify the second exon in each gene with no flank
+
+1. Import a region file as a GRanges object
+
+```r
+# Import region file
+region_file <- readBed(path/to/region_file.bed)
+```
+
+2. Using `getFeature` to specify our TSS region with a 50b flank either side
+
+```r
+# Set start/end feature to "TSS" and both flanks to 50
+TSSregion <- getFeature(
+  object = region_file, 
+  start_feature = "TSS", 
+  end_feature = "TSS", 
+  start_flank = 50, 
+  end_flank = 50
+  )
+```
+
+3. Using `getFeature` to specify the second exon
+
+```r
+# Set start_feature to the 5' boundary of Exon 2 and end_feature to the 3' boundary of Exon 2
+Exon2region <- getFeature(
+  object = region_file, 
+  start_feature = "Exon", 
+  start_exon = 2, 
+  start_exon_boundary = "5prime",
+  end_feature = "Exon",
+  end_exon = 2,
+  end_exon_boundary = "3prime
+  )
+```

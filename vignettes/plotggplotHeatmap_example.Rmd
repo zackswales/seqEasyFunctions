@@ -1,0 +1,72 @@
+---
+title: "Detailed Example of plotggplotHeatmap Usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Detailed Example of plotggplotHeatmap Usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Detailed Example of `plotggplotHeatmap`
+
+This vignette provides a detailed example of how to use the `plotggplotHeatmap` function to create a list of ggplot heatmap objects from a list of matrices generated from the `matList` function. This function leverages the `tidyr`, `dplyr`, `ggplot2`, `stats`, `patchwork`, `viridis`, and `RColorBrewer` packages to interpret the matrix data and produce heatmap visualisations with a range of customisation options
+
+## Prerequisites
+
+Before we begin, ensure that you have the necessary packages installed and loaded:
+
+```{r install_packages, eval=FALSE}
+if (!requireNamespace("tidyr", quietly = TRUE)) {
+  install.packages("tidyr")
+}
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+  install.packages("ggplot2")
+}
+if (!requireNamespace("stats", quietly = TRUE)) {
+  install.packages("stats")
+}
+if (!requireNamespace("RColorBrewer", quietly = TRUE)) {
+  install.packages("RColorBrewer")
+}
+if (!requireNamespace("viridis", quietly = TRUE)) {
+  install.packages("viridis")
+}
+if (!requireNamespace("patchwork", quietly = TRUE)) {
+  install.packages("patchwork")
+}
+
+
+# Once installed then load the required libraries
+
+library(tidyr)
+library(ggplot2)
+library(stats)
+library(RColorBrewer)
+library(viridis)
+library(patchwork)
+```
+
+## Usage
+
+In this case we are going to take a list of matrices called "matrixlist" generated from the `matList` function and use them to generate heatmaps using the `plotggplotHeatmap` function
+
+1. Selecting window sizes for plotting. In this case we will give 50 windows to the upstream flank, 100 to the full gene, and 50 to the downstream flank 
+
+```r
+# Specify the window sizes
+windows <- c("Upstream" = 50, "Gene" = 100, "Downstream" = 50)
+```
+
+2. Using `plotggplotHeatmap` to create the heatmaps using the following customisation options: (1) Want an above average profile (2) Viridis as the colour palette (3) log2 transformation (4) Break lines on the heatmap
+
+```r
+# Generating our heatmap list
+heatmaps <- plotggplotHeatmap(
+  matl = matrixlist,
+  wins = windows,
+  average_profile = TRUE,
+  colour_palette = "viridis",
+  log2 = TRUE,
+  dottedlines = TRUE
+  )
+```

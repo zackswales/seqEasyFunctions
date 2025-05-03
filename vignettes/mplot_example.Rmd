@@ -1,0 +1,76 @@
+---
+title: "Detailed Example of mplot Usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Detailed Example of mplot Usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Detailed Example of `mplot`
+
+This vignette provides a detailed example of how to use the `mplot` function to generate an average profile plot from a list of matrices generated via the `matList` function. There are a range of customisation options available to alter the output. The function leverages the `ggplot2`, `dplyr`, `tidyr`, `purrr`, `stringr`, `rlang`, and `matrixStats` packages to intepret the matrices produces by the `matList` function and generate an accurate average profile plot.
+
+## Prerequisites
+
+Before we begin, ensure that you have the necessary packages installed and loaded:
+
+```{r install_packages, eval=FALSE}
+if (!requireNamespace("tidyr", quietly = TRUE)) {
+  install.packages("tidyr")
+}
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+  install.packages("ggplot2")
+}
+if (!requireNamespace("stringr", quietly = TRUE)) {
+  install.packages("stringr")
+}
+if (!requireNamespace("rlang", quietly = TRUE)) {
+  install.packages("rlang")
+}
+if (!requireNamespace("dplyr", quietly = TRUE)) {
+  install.packages("dplyr")
+}
+if (!requireNamespace("matrixStats", quietly = TRUE)) {
+  install.packages("matrixStats")
+}
+if (!requireNamespace("purrr", quietly = TRUE)) {
+  install.packages("purrr")
+}
+
+
+# Once installed then load the required libraries
+
+library(tidyr)
+library(ggplot2)
+library(stringr)
+library(rlang)
+library(dplyr)
+library(matrixStats)
+library(purrr)
+```
+
+## Usage
+
+In this case we are going to take a list of matrices called "matrixlist" generated from the `matList` function and use them to generate an average profile plot using the `plotggplotHeatmap` function with a range of customisation options.
+
+1. Define the colour palette for the average profile plot
+
+```r
+# Using a colour palette from the RColorBrewer package
+pal = c(RColorBrewer::brewer.pal(n = 9,name = "Set1"))
+```
+
+2. Creating the average profile plot changing the title, axis labels, line transparency, and including error
+
+```r
+average_profile <- mplot(
+  matl = matrixlist, 
+  colmap = pal, 
+  title = "Average Profile Example", 
+  unit = "Y-axis value", 
+  feature = "X-axis value", 
+  alpha = 0.7, 
+  error = TRUE
+  )
+```

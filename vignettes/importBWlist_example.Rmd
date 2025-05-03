@@ -1,0 +1,77 @@
+---
+title: "Detailed Example of importBWlist Usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Detailed Example of importBWlist Usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Detailed Example of `importBWlist`
+
+This vignette provides a detailed example of how to use the `importBWlist` function to efficiently import data from multiple BigWig (`.bw`) files into R. The `importBWlist` function leverages the `rtracklayer` package for the actual import and `purrr` for streamlined iteration over the files.
+
+## Prerequisites
+
+Before we begin, ensure that you have the necessary packages installed and loaded:
+
+```{r install_packages, eval=FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(version = "3.21")
+
+if (!requireNamespace("rtracklayer", quietly = TRUE)) {
+  BiocManager::install("rtracklayer")
+}
+if (!requireNamespace("purrr", quietly = TRUE)) {
+  install.packages("purrr")
+}
+if (!requireNamespace("GenomicRanges", quietly = TRUE)) {
+  BiocManager::install("GenomicRanges")
+}
+
+# Once installed then load the required libraries
+
+library(rtracklayer)
+library(purrr)
+library(GenomicRanges)
+```
+
+## Usage
+
+1. Specify the file paths to the bigWig files that you want to import:
+
+```r
+bw_file_paths <- c(
+  "path/to/sample1.bw",
+  "path/to/sample2.bw",
+  "path/to/treatment.bw"
+)
+```
+
+2. Define names for the imported objects:
+
+```r
+sample_names <- c(
+  "Sample1",
+  "Sample2",
+  "Treatment"
+)
+```
+
+3. Import an optional .bed file as a GRanges object to specify the genomic regions to import from each bed file
+
+```r
+regions <- readBed(path/to/regionfile.bed)
+```
+
+4. Now we have specified our files, names, and selection region we can use `importBWlist`
+
+```r
+imported_bw <- importBWlist(
+  bwf = bw_file_paths, 
+  names = sample_names, 
+  selection = regions
+  )
+```
+
